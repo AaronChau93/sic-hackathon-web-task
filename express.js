@@ -37,6 +37,11 @@ app.get('/', function (req, res) {
   // res.sendStatus(200);
 });
 
+app.post('/', function(req, res) {
+  console.log("Received!");
+  res.sendStatus(200);
+});
+
 app.post('/message', function(req, res) {
   console.log("Body: " + req.body);
   // res.send(req.params.message);
