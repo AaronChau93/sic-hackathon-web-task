@@ -37,8 +37,8 @@ app.get('/', function (req, res) {
   // res.sendStatus(200);
 });
 
-app.get('/message/:message', function(req, res) {
-  console.log(res);
+app.post('/message', function(req, res) {
+  console.log(req.body.message);
   // res.send(req.params.message);
   res.sendStatus(200);
 });
