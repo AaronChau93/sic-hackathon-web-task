@@ -17,6 +17,16 @@ var restAcessToken = "/v1.2/accounts/accesstokens?key=AAKa2552b36872e464fa10f79f
 //     account.access_token = JSON.parse(body).result.account_access_token;
 //   } 
 // });
+
+request("https://wt-aaronchauchau-gmail-com-0.run.webtask.io/express/message", function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log(body);
+  } else {
+    console.log("error");
+  }
+});
+
+
 function sendKandyMessageRequest(key, device_id, messageJSON) {
     var url_ext = "/v1.2/devices/messages?key=" + key + "&device_id=" + device_id;
     request.post(BASE_URL + url_ext,
