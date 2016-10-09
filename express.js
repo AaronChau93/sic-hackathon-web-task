@@ -47,9 +47,10 @@ app.post('/', function(req, res) {
 app.post('/message', function(req, res) {
   console.log("Body: " + req.body);
   // res.send(req.params.message);
-  res.sendStatus(200);
+  res.status(200).send({msg:"hello"});
 });
 
+// save all data here. temperature, etc
 
 
 request("https://wt-aaronchauchau-gmail-com-0.run.webtask.io/express/message", function (error, response, body) {
