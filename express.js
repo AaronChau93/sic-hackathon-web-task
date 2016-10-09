@@ -47,7 +47,7 @@ app.post('/', function(req, res) {
 app.post('/message', function(req, res) {
   console.log("Body: " + req.body);
   // res.send(req.params.message);
-  res.status(200).send({msg:"hello"});
+  res.status(200).send({msg:"hell"});
 });
 
 // save all data here. temperature, etc
