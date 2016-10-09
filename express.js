@@ -1,10 +1,11 @@
 var express    = require('express');
 var Webtask    = require('webtask-tools');
 var bodyParser = require('body-parser');
-var http = require('request');
+var app = express();
+
+var http = require('http').Server(app);
 var io = require('socket.io');
 var socket = io(http);
-var app = express();
 
 var BASE_URL = "https://api.kandy.io/";
 
