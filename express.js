@@ -2,63 +2,21 @@ var express    = require('express');
 var Webtask    = require('webtask-tools');
 var bodyParser = require('body-parser');
 var request = require('request');
+var io = require('socket.io');
+var socket = io(http);
 var app = express();
+
 var BASE_URL = "https://api.kandy.io/";
 
 app.use(bodyParser.json());
 
-// Get Account Access Token
-var account = {access_token : null};
-var restAcessToken = "/v1.2/accounts/accesstokens?key=AAKa2552b36872e464fa10f79fb5a3153a9&account_api_secret=AAS947d72261ead4ad4adfa6048cdd96a74";
 
-// request(BASE_URL + restAcessToken, function (error, response, body) {
-//   if (!error && response.statusCode == 200) {
-//     console.log(body);
-//     account.access_token = JSON.parse(body).result.account_access_token;
-//   } 
-// });
-
-
-function sendKandyMessageRequest(key, device_id, messageJSON) {
-    var url_ext = "/v1.2/devices/messages?key=" + key + "&device_id=" + device_id;
-    request.post(BASE_URL + url_ext,
-    {json: {message: messageJSON}},
-    function (error, res, body) {
-      if (!error && res.statusCode == 200) {
-        if(body) {
-          console.log(typeof body);
-          console.log(body);
-        }
-      } else {
-        console.log(error);
-      }
+socket.on('connection', function(client){
+  console.log('someone connected to namespace ');
+ 
+  client.on('disconnect', function(){
+    console.log('user disconnected there are now ' + socket.total_users + ' users');
   });
-}
-app.get('/', function (req, res) {
-  res.send("Hellooooo " + account.access_token);
-  // res.sendStatus(200);
-});
-
-app.post('/', function(req, res) {
-  console.log("Received!");
-  res.sendStatus(200);
-});
-
-app.post('/message', function(req, res) {
-  console.log("Body: " + req.body);
-  // res.send(req.params.message);
-  res.status(200).send({msg:"hell"});
-});
-
-// save all data here. temperature, etc
-
-
-request.post("https://wt-aaronchauchau-gmail-com-0.run.webtask.io/express/message", function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    console.log(body);
-  } else {
-    console.log("error");
-  }
 });
 
 module.exports = Webtask.fromExpress(app);
