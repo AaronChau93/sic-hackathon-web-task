@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 // Get Account Access Token
 var account = {access_token : null};
 var restAcessToken = "/v1.2/accounts/accesstokens?key=AAKa2552b36872e464fa10f79fb5a3153a9&account_api_secret=AAS947d72261ead4ad4adfa6048cdd96a74";
-var restSendMessage = "/v1.2/devices/messages{?key, device_id}";
+var restSendMessage = "/v1.2/devices/messages";
 
 request(BASE_URL + restAcessToken, function (error, response, body) {
   if (!error && response.statusCode == 200) {
@@ -18,7 +18,21 @@ request(BASE_URL + restAcessToken, function (error, response, body) {
     account.access_token = JSON.parse(body).result.account_access_token;
   } 
 });
-
+function sendKandyRequest(key, device_id) {
+    var url_ext = "?key=" + key + "&device_id=" + device_id;
+    request.post(BASE_URL + url_ext,
+    {json: {alexa_id: session.user.userId}},
+    function (error, res, body) {
+      if (!error && res.statusCode == 200) {
+        if(body) {
+          console.log(typeof body);
+          console.log(body);
+        }
+      } else {
+        console.log(error);
+      }
+  });
+}
 app.get('/', function (req, res) {
   res.send("Hellooooo " + account.access_token);
   // res.sendStatus(200);
